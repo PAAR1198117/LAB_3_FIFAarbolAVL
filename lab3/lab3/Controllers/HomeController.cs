@@ -26,5 +26,11 @@ namespace lab3.Controllers
 
             return View();
         }
+        public ActionResult Jugadores()
+        {
+            ViewBag.Message = "Hola mundo";
+
+            return View();
+        }
     }
 }
