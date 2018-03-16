@@ -37,16 +37,16 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var model = new Partido
+                var model = new Partidos
                 {
                     NoPartido = Convert.ToInt16(collection["Numero de Partido"]),
-                    Fecha = Convert.ToDateTime(collection["Fecha de Partido"]),
+                    FechaPartido = (collection["Fecha de Partido"]),
                     Grupo = collection["Grupo de Partido"],
                     Pais1 = collection["Local"],
                     Pais2 = collection["Visitante"],
                     Estadio = collection["Estadio"]
                 };
-                return RedirectToAction("Index");
+                return RedirectToAction("Importar");
             }
             catch
             {
@@ -67,18 +67,18 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var model = new Partido
+                var model = new Partidos
                 {
                     NoPartido = Convert.ToInt16(collection["Numero de Partido"]),
-                    Fecha = Convert.ToDateTime(collection["Fecha de Partido"]),
+                    FechaPartido =(collection["Fecha de Partido"]),
                     Grupo = collection["Grupo de Partido"],
                     Pais1 = collection["Local"],
                     Pais2 = collection["Visitante"],
                     Estadio = collection["Estadio"]
                 };
                 Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == id)); //Elimino el jugador que coincida el ID
-                Data.Instance.Partidos.Add(model); // Agrego el "nuevo" jugador (Realmente el jugador modificado)
-                return RedirectToAction("Index");
+               /* Data.Instance.Partidos.Add(model); */// Agrego el "nuevo" jugador (Realmente el jugador modificado)
+                return RedirectToAction("Importar");
             }
             catch
             {
@@ -101,7 +101,7 @@ namespace WebApplication3.Controllers
             {
                 // TODO: Add delete logic here
                 Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == id));
-                return RedirectToAction("Index");
+                return RedirectToAction("Importar");
             }
             catch
             {
@@ -115,7 +115,7 @@ namespace WebApplication3.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase postedFile)
+        public ActionResult Importar(HttpPostedFileBase postedFile)
         {
             List<Partido> partidosFIFA = new List<Partido>();
             string filePath = string.Empty;
@@ -131,23 +131,26 @@ namespace WebApplication3.Controllers
                 postedFile.SaveAs(filePath);
 
 
-                string JSON_DATA = System.IO.File.ReadAllText(filePath);
-
-
-                Partido partido_oficial = JsonConvert.DeserializeObject<Partido>(JSON_DATA);
-
-                partidosFIFA.Add(new Partido
+                var JSON_DATA = System.IO.File.ReadAllText(filePath);
+                var partido_oficial = JsonConvert.DeserializeObject<Partido>(JSON_DATA);
+                if (JSON_DATA !=null)
                 {
-                    NoPartido = partido_oficial.NoPartido,
-                    Fecha = partido_oficial.Fecha,
-                    Grupo = partido_oficial.Grupo,
-                    Pais1 = partido_oficial.Pais1,
-                    Pais2 = partido_oficial.Pais2,
-                    Estadio = partido_oficial.Estadio
-                });
-                //agregar la funcion de aregar pais mandando el JSON_DATA
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        if (partido_oficial != null)
+                        {
+                                                    partidosFIFA.Add(partido_oficial);
+                        }
+                        string var = "nodo" + Convert.ToString(i);
+                        partidosFIFA.Add(partido_oficial);
+
+                    }
+                    
+                }
+                
+
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Importar");
         }
 
 
