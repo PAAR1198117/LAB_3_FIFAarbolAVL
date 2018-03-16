@@ -9,7 +9,7 @@ using System.Web;
 
 namespace WebApplication3.Models
 {
-    public partial class Partidos
+    public partial class Partido
     {
         [JsonProperty("noPartido")]
         public int NoPartido { get; set; }

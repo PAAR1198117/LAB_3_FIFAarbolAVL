@@ -18,11 +18,11 @@ namespace WebApplication3.Clases
             }
         }
 
-        public List<Partidos> Partidos;
+        public List<Partido> Partidos;
 
         public Data()
         {
-            Partidos = new List<Partidos>();
+            Partidos = new List<Partido>();
         }
     }
 }

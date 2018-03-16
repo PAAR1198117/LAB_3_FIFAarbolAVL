@@ -37,7 +37,7 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var model = new Partidos
+                var model = new Partido
                 {
                     NoPartido = Convert.ToInt16(collection["Numero de Partido"]),
                     FechaPartido = (collection["Fecha de Partido"]),
@@ -67,7 +67,7 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var model = new Partidos
+                var model = new Partido
                 {
                     NoPartido = Convert.ToInt16(collection["Numero de Partido"]),
                     FechaPartido =(collection["Fecha de Partido"]),
@@ -77,7 +77,7 @@ namespace WebApplication3.Controllers
                     Estadio = collection["Estadio"]
                 };
                 Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == id)); //Elimino el jugador que coincida el ID
-               /* Data.Instance.Partidos.Add(model); */// Agrego el "nuevo" jugador (Realmente el jugador modificado)
+                Data.Instance.Partidos.Add(model); // Agrego el "nuevo" jugador (Realmente el jugador modificado)
                 return RedirectToAction("Importar");
             }
             catch
@@ -117,7 +117,6 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public ActionResult Importar(HttpPostedFileBase postedFile)
         {
-            List<Partido> partidosFIFA = new List<Partido>();
             string filePath = string.Empty;
             if (postedFile != null)
             {
@@ -130,25 +129,25 @@ namespace WebApplication3.Controllers
                 string extension = Path.GetExtension(postedFile.FileName);
                 postedFile.SaveAs(filePath);
 
+                
+                string JSON_DATA = System.IO.File.ReadAllText(filePath);
+                var partido = Partido.FromJson(JSON_DATA);
 
-                var JSON_DATA = System.IO.File.ReadAllText(filePath);
-                var partido_oficial = JsonConvert.DeserializeObject<Partido>(JSON_DATA);
-                if (JSON_DATA !=null)
+                foreach (var item in partido)
                 {
-                    for (int i = 1; i <= 12; i++)
+                    Data.Instance.Partidos.Add(new Partido
                     {
-                        if (partido_oficial != null)
-                        {
-                                                    partidosFIFA.Add(partido_oficial);
-                        }
-                        string var = "nodo" + Convert.ToString(i);
-                        partidosFIFA.Add(partido_oficial);
+                        NoPartido = item.Value.NoPartido,
+                        FechaPartido = item.Value.FechaPartido,
+                        Grupo = item.Value.Grupo,
+                        Pais1 = item.Value.Pais1,
+                        Pais2 = item.Value.Pais2,
+                        Estadio = item.Value.Estadio
 
-                    }
-                    
+                    });
                 }
                 
-
+                
             }
             return RedirectToAction("Importar");
         }
