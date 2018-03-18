@@ -8,7 +8,7 @@
     "Estadio": "Luzhniki Stadium"
   },
   "nodo2": {
-	"noPartido": 4,//24
+	"noPartido": 24,
 	"FechaPartido": "2018-06-22",
 	"Grupo": "D",
 	"Pais1": "Nigeria",

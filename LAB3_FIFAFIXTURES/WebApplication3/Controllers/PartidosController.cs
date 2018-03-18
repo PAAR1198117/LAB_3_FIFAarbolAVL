@@ -11,8 +11,33 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
+    
     public class PartidosController : Controller
     {
+        public BinaryTree<partidos> btree = new BinaryTree<partidos>();       
+        public class partidos : IComparable
+        {
+            public int noMatch { get; set; }
+            public DateTime datematch { get; set; }
+            public string group { get; set; }
+            public string country1{ get; set; }
+            public string country2 { get; set; }
+            public string stadium { get; set; }
+            public partidos(int noMatch, DateTime datematch, string group, string country1, string country2, string stadium)
+            {
+                this.noMatch = noMatch;
+                this.datematch = datematch;
+                this.group = group;
+                this.country1 = country1;
+                this.country2 = country2;
+                this.stadium = stadium;
+            }
+            public int CompareTo(object obj) {
+                partidos compareToObj = (partidos)obj;
+                return this.noMatch.CompareTo(compareToObj.noMatch);
+            }
+
+        }
         public ActionResult Index()
         {
             return View();
@@ -117,6 +142,7 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public ActionResult Importar(HttpPostedFileBase postedFile)
         {
+            partidos datatoadd;
             string filePath = string.Empty;
             if (postedFile != null)
             {
@@ -132,7 +158,7 @@ namespace WebApplication3.Controllers
                 
                 string JSON_DATA = System.IO.File.ReadAllText(filePath);
                 var partido = Partido.FromJson(JSON_DATA);
-
+                
                 foreach (var item in partido)
                 {
                     Data.Instance.Partidos.Add(new Partido
@@ -142,17 +168,15 @@ namespace WebApplication3.Controllers
                         Grupo = item.Value.Grupo,
                         Pais1 = item.Value.Pais1,
                         Pais2 = item.Value.Pais2,
-                        Estadio = item.Value.Estadio
-
+                        Estadio = item.Value.Estadio                        
                     });
-                }
-                
-                
+                    datatoadd = new partidos(item.Value.NoPartido, Convert.ToDateTime(item.Value.FechaPartido), item.Value.Grupo, item.Value.Pais1, item.Value.Pais2, item.Value.Estadio);
+                    btree.AddNode(datatoadd);
+                    btree.AVL();
+                }                                
             }
             return RedirectToAction("Importar");
         }
-
-
-
     }
+    
 }

@@ -8,7 +8,7 @@
     "Estadio": "Luzhniki Stadium"
   },
   "nodo2": {
-	"noPartido": 4,//24
+	"noPartido": 24,
 	"FechaPartido": "2018-06-22",
 	"Grupo": "D",
 	"Pais1": "Nigeria",
@@ -86,72 +86,8 @@
 	"Pais1": "Suecia",
     "Pais2": "Corea del Sur",
     "Estadio": "Nizhny Novgorod Stadium"
-	},
-	 "nodo12": {
-	"noPartido": 17,
-	"FechaPartido": "2018-06-19",
-	"Grupo": "A",
-	"Pais1": "Rusia",
-    "Pais2": "Egipto",
-    "Estadio": "Krestovsky Stadium"
   },
- "nodo13": {
-	"noPartido": 19,
-	"FechaPartido": "2018-06-20",
-	"Grupo": "B",
-	"Pais1": "Portugal",
-    "Pais2": "Marruecos",
-    "Estadio": "Luzhniki Stadium"
-	},
-	 "nodo14": {
-	"noPartido": 28,
-	"FechaPartido": "2018-06-23",
-	"Grupo": "F",
-	"Pais1": "Corea del Sur",
-    "Pais2": "México",
-    "Estadio": "Luzhniki Stadium"
-  },
- "nodo15": {
-	"noPartido": 48,
-	"FechaPartido": "2018-06-28",
-	"Grupo": "H",
-	"Pais1": "Senegal",
-    "Pais2": "Colombia",
-    "Estadio": "Cosmos Arena"
-	},
-	 "nodo16": {
-	"noPartido": 38,
-	"FechaPartido": "2018-06-26",
-	"Grupo": "C",
-	"Pais1": "Australia",
-    "Pais2": "Perú",
-    "Estadio": "Fisht Olympic Stadium"
-  },
- "nodo17": {
-	"noPartido": 23,
-	"FechaPartido": "2018-06-21",
-	"Grupo": "D",
-	"Pais1": "Argentina",
-    "Pais2": "Croacia",
-    "Estadio": "Nizhny Novgorod Stadium"
-	},
-	 "nodo18": {
-	"noPartido": 42,
-	"FechaPartido": "2018-06-27",
-	"Grupo": "E",
-	"Pais1": "Suiza",
-    "Pais2": "Costa Rica",
-    "Estadio": "Nizhny Novgorod Stadium"
-  },
- "nodo19": {
-	"noPartido": 4,
-	"FechaPartido": "2018-06-15",
-	"Grupo": "A",
-	"Pais1": "Marruecos",
-    "Pais2": "Irán",
-    "Estadio": "Krestovsky Stadium"
-	},
- "nodo20": {
+ "nodo12": {
 	"noPartido": 1,
 	"FechaPartido": "2018-06-14",
 	"Grupo": "A",
