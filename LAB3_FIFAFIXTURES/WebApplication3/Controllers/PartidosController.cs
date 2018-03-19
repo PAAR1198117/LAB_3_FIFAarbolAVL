@@ -37,6 +37,7 @@ namespace WebApplication3.Controllers
                 return this.noMatch.CompareTo(compareToObj.noMatch);
             }
         }
+
         public ActionResult Index()
         {
             return View();
@@ -63,13 +64,14 @@ namespace WebApplication3.Controllers
             {
                 var model = new Partido
                 {
-                    NoPartido = Convert.ToInt16(collection["Numero de Partido"]),
-                    FechaPartido = (collection["Fecha de Partido"]),
-                    Grupo = collection["Grupo de Partido"],
-                    Pais1 = collection["Local"],
-                    Pais2 = collection["Visitante"],
+                    NoPartido = Convert.ToInt16(collection["noPartido"]),
+                    FechaPartido = (collection["FechaPartido"]),
+                    Grupo = collection["Grupo"],
+                    Pais1 = collection["Pais1"],
+                    Pais2 = collection["Pais2"],
                     Estadio = collection["Estadio"]
                 };
+                Data.Instance.Partidos.Add(model);
                 return RedirectToAction("Importar");
             }
             catch
@@ -93,13 +95,15 @@ namespace WebApplication3.Controllers
             {
                 var model = new Partido
                 {
-                    NoPartido = Convert.ToInt16(collection["Numero de Partido"]),
-                    FechaPartido =(collection["Fecha de Partido"]),
-                    Grupo = collection["Grupo de Partido"],
-                    Pais1 = collection["Local"],
-                    Pais2 = collection["Visitante"],
+                    NoPartido = Convert.ToInt16(collection["noPartido"]),
+                    FechaPartido = (collection["FechaPartido"]),
+                    Grupo = collection["Grupo"],
+                    Pais1 = collection["Pais1"],
+                    Pais2 = collection["Pais2"],
                     Estadio = collection["Estadio"]
                 };
+                partidos toDelete = new partidos(model.NoPartido,Convert.ToDateTime(model.FechaPartido), model.Grupo,model.Pais1,model.Pais2,model.Estadio);
+                btree.DeleteNode(toDelete);
                 Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == id)); //Elimino el jugador que coincida el ID
                 Data.Instance.Partidos.Add(model); // Agrego el "nuevo" jugador (Realmente el jugador modificado)
                 return RedirectToAction("Importar");
@@ -119,12 +123,24 @@ namespace WebApplication3.Controllers
 
         // POST: Partidos/Delete/5
         [HttpPost]
-        public ActionResult Delete(int noMatch, DateTime datematch, string group, string country1, string country2, string stadium)
+        public ActionResult Delete(int id, FormCollection collection)
         {
             // TODO: Add delete logic here
-            partidos dataToDelete = new partidos(noMatch, (DateTime) datematch,  group,  country1,  country2,  stadium);
-            Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == noMatch));
-            btree.DeleteNode(dataToDelete);
+            //partidos dataToDelete = new partidos(noMatch, (DateTime) datematch,  group,  country1,  country2,  stadium);
+            //Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == noMatch));
+
+            Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == id)); //Elimino el jugador que coincida el ID
+            var model = new Partido
+            {
+                NoPartido = Convert.ToInt16(collection["noPartido"]),
+                FechaPartido = (collection["FechaPartido"]),
+                Grupo = collection["Grupo"],
+                Pais1 = collection["Pais1"],
+                Pais2 = collection["Pais2"],
+                Estadio = collection["Estadio"]
+            };
+            partidos toDelete = new partidos(model.NoPartido, Convert.ToDateTime(model.FechaPartido), model.Grupo, model.Pais1, model.Pais2, model.Estadio);
+            btree.DeleteNode(toDelete);
             return RedirectToAction("Importar");            
         }
 
