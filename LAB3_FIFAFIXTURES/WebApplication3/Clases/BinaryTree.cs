@@ -70,8 +70,7 @@ namespace WebApplication3.Clases
                     parent.Right.Parent = parent;
                 }
                 return true;
-            }
-
+            }           
             return false;
         }
 

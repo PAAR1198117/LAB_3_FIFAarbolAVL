@@ -38,8 +38,7 @@ namespace WebApplication3.Models
     public static class Serialize
     {
         public static string ToJson(this Dictionary<string, Partido> self) => JsonConvert.SerializeObject(self, WebApplication3.Models.Converter.Settings);
-    }
-
+    }   
     internal class Converter
     {
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings

@@ -13,7 +13,7 @@ namespace WebApplication3.Controllers
 {
     
     public class PartidosController : Controller
-    {
+    {                    
         public BinaryTree<partidos> btree = new BinaryTree<partidos>();       
         public class partidos : IComparable
         {
@@ -36,7 +36,6 @@ namespace WebApplication3.Controllers
                 partidos compareToObj = (partidos)obj;
                 return this.noMatch.CompareTo(compareToObj.noMatch);
             }
-
         }
         public ActionResult Index()
         {
@@ -120,18 +119,13 @@ namespace WebApplication3.Controllers
 
         // POST: Partidos/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int noMatch, DateTime datematch, string group, string country1, string country2, string stadium)
         {
-            try
-            {
-                // TODO: Add delete logic here
-                Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == id));
-                return RedirectToAction("Importar");
-            }
-            catch
-            {
-                return View();
-            }
+            // TODO: Add delete logic here
+            partidos dataToDelete = new partidos(noMatch, (DateTime) datematch,  group,  country1,  country2,  stadium);
+            Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == noMatch));
+            btree.DeleteNode(dataToDelete);
+            return RedirectToAction("Importar");            
         }
 
         public ActionResult Importar()
@@ -172,11 +166,11 @@ namespace WebApplication3.Controllers
                     });
                     datatoadd = new partidos(item.Value.NoPartido, Convert.ToDateTime(item.Value.FechaPartido), item.Value.Grupo, item.Value.Pais1, item.Value.Pais2, item.Value.Estadio);
                     btree.AddNode(datatoadd);
-                    btree.AVL();
-                }                                
+                    btree.AVL();                  
+                }                
             }
             return RedirectToAction("Importar");
         }
-    }
-    
+            
+    }    
 }
