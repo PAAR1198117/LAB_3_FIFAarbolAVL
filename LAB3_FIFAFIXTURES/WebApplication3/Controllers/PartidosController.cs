@@ -72,6 +72,9 @@ namespace WebApplication3.Controllers
                     Estadio = collection["Estadio"]
                 };
                 Data.Instance.Partidos.Add(model);
+                partidos toAdd = new partidos(model.NoPartido, Convert.ToDateTime(model.FechaPartido), model.Grupo, model.Pais1, model.Pais2, model.Estadio);
+                btree.AddNode(toAdd);
+                btree.AVL();
                 return RedirectToAction("Importar");
             }
             catch
@@ -102,8 +105,11 @@ namespace WebApplication3.Controllers
                     Pais2 = collection["Pais2"],
                     Estadio = collection["Estadio"]
                 };
-                partidos toDelete = new partidos(model.NoPartido,Convert.ToDateTime(model.FechaPartido), model.Grupo,model.Pais1,model.Pais2,model.Estadio);
-                btree.DeleteNode(toDelete);
+                partidos toModifi = new partidos(model.NoPartido,Convert.ToDateTime(model.FechaPartido), model.Grupo,model.Pais1,model.Pais2,model.Estadio);
+                /*
+                 * aque agregar logica de editas
+                 * porque no me sale
+                */
                 Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == id)); //Elimino el jugador que coincida el ID
                 Data.Instance.Partidos.Add(model); // Agrego el "nuevo" jugador (Realmente el jugador modificado)
                 return RedirectToAction("Importar");
@@ -141,6 +147,7 @@ namespace WebApplication3.Controllers
             };
             partidos toDelete = new partidos(model.NoPartido, Convert.ToDateTime(model.FechaPartido), model.Grupo, model.Pais1, model.Pais2, model.Estadio);
             btree.DeleteNode(toDelete);
+            btree.AVL();
             return RedirectToAction("Importar");            
         }
 

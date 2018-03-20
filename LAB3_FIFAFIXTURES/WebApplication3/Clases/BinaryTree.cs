@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace WebApplication3.Clases
 {
-    public class BinaryTree<E> where E : IComparable
+    public class BinaryTree<E>  where E : IComparable
     {
 
 
