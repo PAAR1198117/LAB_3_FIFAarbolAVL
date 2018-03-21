@@ -145,6 +145,7 @@
     <Compile Include="Clases\BinaryTreeNode.cs" />
     <Compile Include="Clases\Data.cs" />
     <Compile Include="Clases\Nodes.cs" />
+    <Compile Include="Clases\registros.cs" />
     <Compile Include="Controllers\PartidosController.cs" />
     <Compile Include="Controllers\testController.cs" />
     <Compile Include="Global.asax.cs">

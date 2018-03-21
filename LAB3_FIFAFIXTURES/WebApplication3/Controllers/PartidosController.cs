@@ -14,7 +14,10 @@ namespace WebApplication3.Controllers
     
     public class PartidosController : Controller
     {                    
-        public BinaryTree<partidos> btree = new BinaryTree<partidos>();       
+        public BinaryTree<partidos> btree = new BinaryTree<partidos>();
+        public registros historial = new registros();
+        private string cadena = "";
+              
         public class partidos : IComparable
         {
             public int noMatch { get; set; }
@@ -47,6 +50,8 @@ namespace WebApplication3.Controllers
         public ActionResult Details(int id)
         {
             var model = Data.Instance.Partidos.FirstOrDefault(x => x.NoPartido == id);
+            cadena += " se mostraron detalles de un nodo, \n";
+            historial.escribirArchivo(cadena);                       
             return View(model);
         }
 
@@ -75,6 +80,10 @@ namespace WebApplication3.Controllers
                 partidos toAdd = new partidos(model.NoPartido, Convert.ToDateTime(model.FechaPartido), model.Grupo, model.Pais1, model.Pais2, model.Estadio);
                 btree.AddNode(toAdd);
                 btree.AVL();
+                cadena += "se creo un nuevo nodo, \n";               
+                cadena += "se agrego al arbol un nuevo nodo, \n";
+                cadena += "se balanceo el arbol, \n";
+                historial.escribirArchivo(cadena);                               
                 return RedirectToAction("Importar");
             }
             catch
@@ -108,10 +117,15 @@ namespace WebApplication3.Controllers
                 partidos toModifi = new partidos(model.NoPartido,Convert.ToDateTime(model.FechaPartido), model.Grupo,model.Pais1,model.Pais2,model.Estadio);
                 /*
                  * aque agregar logica de editas
+                 * 
                  * porque no me sale
                 */
+                
+                btree.Find(btree.Root,toModifi);
                 Data.Instance.Partidos.Remove(Data.Instance.Partidos.First(x => x.NoPartido == id)); //Elimino el jugador que coincida el ID
                 Data.Instance.Partidos.Add(model); // Agrego el "nuevo" jugador (Realmente el jugador modificado)
+                cadena += "Se edito un nodo, \n";
+                historial.escribirArchivo(cadena);
                 return RedirectToAction("Importar");
             }
             catch
@@ -148,6 +162,9 @@ namespace WebApplication3.Controllers
             partidos toDelete = new partidos(model.NoPartido, Convert.ToDateTime(model.FechaPartido), model.Grupo, model.Pais1, model.Pais2, model.Estadio);
             btree.DeleteNode(toDelete);
             btree.AVL();
+            cadena += "se elimino un nodo, \n";
+            cadena += "se balanceo el arbol, \n";           
+            historial.escribirArchivo(cadena);
             return RedirectToAction("Importar");            
         }
 
@@ -189,7 +206,9 @@ namespace WebApplication3.Controllers
                     });
                     datatoadd = new partidos(item.Value.NoPartido, Convert.ToDateTime(item.Value.FechaPartido), item.Value.Grupo, item.Value.Pais1, item.Value.Pais2, item.Value.Estadio);
                     btree.AddNode(datatoadd);
-                    btree.AVL();                  
+                    btree.AVL();
+                    cadena += "se cargo un nodo al arbol, \n";
+                    historial.escribirArchivo(cadena);
                 }                
             }
             return RedirectToAction("Importar");
