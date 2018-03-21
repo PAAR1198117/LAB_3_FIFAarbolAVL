@@ -52,4 +52,13 @@ namespace WebApplication3.Clases
             return null;
         }
     }
+    public class Partidos <T> where T : IComparable
+    {      
+        public int NoPartido { get; set; }        
+        public string FechaPartido { get; set; }        
+        public string Grupo { get; set; }       
+        public string Pais1 { get; set; }
+        public string Pais2 { get; set; }      
+        public string Estadio { get; set; }
+    }
 }

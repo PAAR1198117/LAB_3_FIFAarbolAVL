@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace WebApplication3.Clases
 {
-    public class BinaryTree<E> where E : IComparable
+    public class BinaryTree<E>  where E : IComparable
     {
 
 
@@ -70,8 +70,7 @@ namespace WebApplication3.Clases
                     parent.Right.Parent = parent;
                 }
                 return true;
-            }
-
+            }           
             return false;
         }
 
@@ -187,32 +186,7 @@ namespace WebApplication3.Clases
             return true;
         }
 
-        public void DrawTree(Graphics g, Pen pen, SolidBrush brush, BinaryTreeNode<E> node, int xPos, int yPos, int xPad, int depth)
-        {
-            if (node == null)
-                return;
-            if (node.Left != null && node.Left.Value != null)
-            {
-                DrawTree(g, pen, brush, node.Left, (xPos - xPad), yPos + 100, xPad - 50, depth + 1);
-                if (node.Value != null)
-                    g.DrawLine(pen, new Point(xPos + 5, yPos + 5), new Point((xPos - xPad) + 5, (yPos + 100) + 5));
-            }
-            if (node.Value != null)
-            {
-                g.DrawString(node.ToString(), new Font(FontFamily.GenericSansSerif, 7), brush, xPos, yPos - 20);
-                g.FillEllipse(brush, xPos, yPos, 10, 10);
-            }
-            if (node.Right != null && node.Right.Value != null)
-            {
-                DrawTree(g, pen, brush, node.Right, (xPos + xPad), yPos + 100, xPad - 30, depth + 1);
-                g.DrawLine(pen, new Point(xPos + 5, yPos + 5), new Point((xPos + xPad) + 5, (yPos + 100) + 5));
-            }
-        }
-
-        public void DrawTree(Graphics g, Pen pen, SolidBrush brush, int xPos, int yPos)
-        {
-            DrawTree(g, pen, brush, Root, xPos, yPos, 200, 1);
-        }
+      
 
         public void AVL()
         {
